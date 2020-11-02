@@ -26,6 +26,32 @@
     <button (click)="download('US')">下載 英文 語系</button>
 
   </div>
+
+  <br>
+  <div class="bd-example-row">
+    <div class="row">
+      <div class="col">
+        <div style="text-align: center;">中文是我</div>
+        <br>
+        {{twFormatJson}}
+      </div>
+      <div class="col">
+        <div style="text-align: center;">簡中是我</div>
+        <br>
+        {{cnFormatJson}}
+      </div>
+      <div class="col">
+        <div style="text-align: center;">日文是我</div>
+        <br>
+        {{jpFormatJson}}
+      </div>
+      <div class="col">
+        <div style="text-align: center;">英文是我</div>
+        <br>
+        {{usFormatJson}}
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <router-outlet></router-outlet>

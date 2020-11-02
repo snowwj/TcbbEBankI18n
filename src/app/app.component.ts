@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { forkJoin, from, Observable, of } from 'rxjs';
-import { concatMap } from 'rxjs/operators';
 import * as FileSaver from 'file-saver';
+import { forkJoin, Observable, of } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,6 +27,10 @@ export class AppComponent {
   jpJSON = [];
   cnJSON = [];
   twJSON = [];
+  usFormatJson = '';
+  jpFormatJson = '';
+  cnFormatJson = '';
+  twFormatJson = '';
 
   readyDownload = false;
 
@@ -120,6 +124,11 @@ export class AppComponent {
         console.log('jpJSON = ', this.jpJSON);
         console.log('twJSON = ', this.twJSON);
         this.readyDownload = true;
+        this.jpFormatJson = this.formatJSON(this.jpJSON).toString();
+        this.twFormatJson = this.formatJSON(this.twJSON).toString();
+        this.usFormatJson = this.formatJSON(this.usJSON).toString();
+        this.cnFormatJson = this.formatJSON(this.cnJSON).toString();
+        console.log('this.jpFormatJson = ', this.jpFormatJson);
       });
   }
 
@@ -158,16 +167,18 @@ export class AppComponent {
   }
 
   download(type: string) {
+    let str = '';
     if (this.modelName) {
       if (type === 'TW') {
-        this.formatJSON(this.twJSON);
+        str = this.formatJSON(this.twJSON);
       } else if (type === 'CN') {
-        this.formatJSON(this.cnJSON);
+        str = this.formatJSON(this.cnJSON);
       } else if (type === 'JP') {
-        this.formatJSON(this.jpJSON);
+        str = this.formatJSON(this.jpJSON);
       } else {
-        this.formatJSON(this.usJSON);
+        str = this.formatJSON(this.usJSON);
       }
+      this.downloadFile(str);
     } else {
       alert('請輸入功能模組名稱!!');
     }
@@ -179,7 +190,10 @@ export class AppComponent {
       jsonObj[obj.key] = obj.value.trim();
     });
 
-    const str = JSON.stringify(jsonObj, null, 2);
+    return JSON.stringify(jsonObj, null, 2);
+  }
+
+  downloadFile(str: string) {
     const bytes = new TextEncoder().encode(str);
     const blob = new Blob([bytes], {
       type: "application/json;charset=utf-8"
