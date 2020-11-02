@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node --max_old_space_size=12288 ./node_modules/@angular/cli/bin/ng build --aot --buildOptimizer --source-map=false --prod",
+    "build": "node --max_old_space_size=12288 ./node_modules/@angular/cli/bin/ng build --aot --buildOptimizer --source-map=false --prod --base-href=https://snowwj.github.io/TcbbEBankI18n/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
